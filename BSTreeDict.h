@@ -14,15 +14,18 @@ class BSTreeDict: public Dict<V> {
         BSTree<TableEntry<V>>* tree;
 
     public:
-        BSTreeDict() : root(nullptr){}
+        BSTreeDict() : tree(nullptr){}
+
         ~BSTreeDict(){
-            clear(root);
-            root = nullptr;
+            clear(tree);
+            tree = nullptr;
         }
+
         friend std::ostream& operator<<(std::ostream &out, const BSTreeDict<V> &bs){
             out << *(bs.tree);
             return out;
         }
+
         V operator[](std::string key){
             TableEntry<V> te(key, V());
             BSNode<TableEntry<V>>* nodo = tree->search(te);
