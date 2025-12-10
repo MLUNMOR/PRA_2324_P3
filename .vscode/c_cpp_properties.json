@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/mnt/c/users/marc/desktop/segundocarrera/PRA/PRACT1/PRA_2324_P1",
+                "/mnt/c/users/marc/desktop/segundocarrera/PRA/PRACT1/PRA_2324_P1"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}

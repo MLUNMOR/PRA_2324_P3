@@ -19,7 +19,7 @@ class BSNode {
 
         //sobrecarga del operador << (imprimir el elemento por pantalla)
         friend std::ostream& operator<<(std::ostream &out, const BSNode<T> &bsn){
-            out << "Valor del elemento: " << elem;
+            out << "Valor del elemento: " << bsn.elem;
 
             return out;
         }

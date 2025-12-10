@@ -8,11 +8,6 @@
 #include "dict.h"
 #include "tableEntry.h"
 
-#include "../../PRACT1/PRA_2324_P1/list.h"
-#include "../../PRACT1/PRA_2324_P1/node.h"
-#include "../../PRACT1/PRA_2324_P1/listlinked.h"
-
-
 template <typename V>
 class HashTable: public Dict<V> {
 
@@ -20,31 +15,79 @@ class HashTable: public Dict<V> {
         //Atributos privados de la clase
         int n;
         int max;
-        listlinked<TableEntry<V>> * table;
+        TableEntry<V> * table;
 
     public:
-        //métodos de dict.h
-        
-        void insert(std::string key, V value) override {}
-        V search(std::string key) override {}
-        V remove(std::string key) override {}
+        //métodos virtuales de dict.h
+        void insert(std::string key, V value) override {
+            int index = h(key);
+            int start = index;
+            bool found = false;
+            do {
+                if (table[index].key == key) {
+                    throw std::runtime_error("Key already exists");
+                }
+                if (table[index].key == "") {
+                    table[index] = TableEntry<V>(key, value);
+                    n++;
+                    return;
+                }
+                index = (index + 1) % max;
+            } while (index != start);
+            throw std::runtime_error("Hash table is full");
+        }
+
+        V search(std::string key) override {
+            int index = h(key);
+            int start = index;
+            do {
+                if (table[index].key == key) {
+                    return table[index].value;
+                }
+                if (table[index].key == "") {
+                    break;
+                }
+                index = (index + 1) % max;
+            } while (index != start);
+            throw std::runtime_error("Key not found");
+        }
+
+        V remove(std::string key) override {
+            int index = h(key);
+            int start = index;
+            do {
+                if (table[index].key == key) {
+                    V value = table[index].value;
+                    table[index] = TableEntry<V>();
+                    n--;
+                    return value;
+                }
+                if (table[index].key == "") {
+                    break;
+                }
+                index = (index + 1) % max;
+            } while (index != start);
+            throw std::runtime_error("Key not found");
+        }
+
         int entries() override { return n; }
 
-    
         //Función hash
         int h(std::string key){
             int sum = 0;
             for(int i = 0; i < key.size(); ++i){
-                sum += static_cast<int>(clave.at(i));
+                sum += static_cast<int>(key.at(i));
             }
             return sum % max;
         }
-        
+
         //Método constructor
         HashTable(int size){
+            max = size;
+            n = 0;
             table = new TableEntry<V>[max];
         }
-        
+
         //Método destructor
         ~HashTable(){
             delete[] table;
@@ -54,27 +97,33 @@ class HashTable: public Dict<V> {
         int capacity(){
             return max;
         }
-        
+
         //Sobrecarga del operador << (devolver la tabla hash entera)
         friend std::ostream& operator<<(std::ostream &out, const HashTable<V> &th){
             for(int i = 0; i < th.max; ++i){
-                out << "[" << i << "] ";
-                out << th.table[i].key << "->" << th.table[i].value << "\n";
+                if (th.table[i].key != "") {
+                    out << "[" << i << "] ";
+                    out << th.table[i] << "\n";
+                }
             }
             return out;
         }
-        
+
         V operator[](std::string key){
             int index = h(key);
-            
-            for(int i = 0; i < max; ++i){
-                if(table[index].key == key){
-                return table[index].value;
+            int start = index;
+            do {
+                if (table[index].key == key) {
+                    return table[index].value;
                 }
-            }
-            return runtime_error("Elemento no encontrado");   
+                if (table[index].key == "") {
+                    break;
+                }
+                index = (index + 1) % max;
+            } while (index != start);
+            throw std::runtime_error("Elemento no encontrado");
         }
-        
+
 };
 
 #endif

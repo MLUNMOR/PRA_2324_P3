@@ -26,11 +26,11 @@ class BSTree {
                 return new BSNode<T>(e);
             }
             else if(e < n->elem){
-                n->left = insertar_nodo(n->left, n);
+                n->left = insertar_nodo(n->left, e);
             } else if(e > n->elem){
-                n->right = insertar_nodo(n->right, n);
+                n->right = insertar_nodo(n->right, e);
             } else {
-                n->elem = e;
+                throw std::runtime_error("Element already exists");
             }
             return n;
         }
@@ -89,6 +89,14 @@ class BSTree {
             return n;
         }
 
+        BSNode<T>* min(BSNode<T>* n) const{
+            if(n == nullptr) return nullptr;
+            while(n->left != nullptr){
+                n = n->left;
+            }
+            return n;
+        }
+
         void delete_cascade(BSNode<T>* n){
             if(n != nullptr){
                 delete_cascade(n->left);
@@ -102,10 +110,10 @@ class BSTree {
         // miembros públicos
         
         //Constructor
-        BSTree();
+        BSTree() { nelem = 0; root = nullptr; }
 
         //Destructor
-        ~BSTree() : return delete_cascade();
+        ~BSTree() { delete_cascade(root); }
 
         int size() const{
             return nelem;
@@ -113,6 +121,7 @@ class BSTree {
 
         T search(T e) const{
             BSNode<T> *nodo = search(root, e);
+            if(nodo == nullptr) throw std::runtime_error("Elemento no encontrado");
             return nodo->elem;
         }
 
@@ -121,7 +130,7 @@ class BSTree {
         }
 
         void insert(T e){
-            return insert(e);
+            root = insertar_nodo(root, e);
         }
 
         friend std::ostream& operator<<(std::ostream &out, const BSTree<T> &bst){
@@ -130,7 +139,7 @@ class BSTree {
         }
 
         void remove(T e){
-            return remove(e);
+            root = remove(root, e);
         }
 
 };
