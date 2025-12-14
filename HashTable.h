@@ -42,14 +42,14 @@ class HashTable: public Dict<V> {
             int start = index;
             do {
                 if (table[index].key == key) {
-                    return table[index].value;
+                    return index;
                 }
                 if (table[index].key == "") {
                     break;
                 }
                 index = (index + 1) % max;
             } while (index != start);
-            throw std::runtime_error("Key not found");
+            throw std::runtime_error("Elemento no encontrado");
         }
 
         V remove(std::string key) override {
@@ -67,8 +67,10 @@ class HashTable: public Dict<V> {
                 }
                 index = (index + 1) % max;
             } while (index != start);
-            throw std::runtime_error("Key not found");
+            throw std::runtime_error("Elemento no encontrado");
         }
+
+
 
         int entries() override { return n; }
 
