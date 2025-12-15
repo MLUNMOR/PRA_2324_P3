@@ -3,6 +3,7 @@ bin/testTableEntry:	testTableEntry.cpp TableEntry.h HashTable.h testHashTable.cp
 	g++ -o bin/testTableEntry testTableEntry.cpp
 	g++ -o bin/testHashTable testHashTable.cpp
 	g++ -o bin/testBSTree testBSTree.cpp
+	g++ -o bin/testBSTreeDict testBSTreeDict.cpp
 
 clean:
 	rm -rf *.o *.gch bin
