@@ -43,12 +43,13 @@ class BSTree {
             }
         }
 
-        BSNode<T>* remove(BSNode<T>* n, T e){
+
+        BSNode<T>* remove_recursive(BSNode<T>* n, T e){
             if(n == nullptr) return n;
             else if(e < n->elem){
-                n->left = remove(n->left, e);
+                n->left = remove_recursive(n->left, e);
             } else if(e > n->elem){
-                n->right = remove(n->right, e);
+                n->right = remove_recursive(n->right, e);
             } else {
                 if(n->left == nullptr){
                     BSNode<T>* temp = n->right;
@@ -66,7 +67,7 @@ class BSTree {
 
                 n->elem = temp->elem;
 
-                n->right = remove(n->right, temp->elem);
+                n->right = remove_recursive(n->right, temp->elem);
             }
             return n;
         }
@@ -138,11 +139,9 @@ class BSTree {
             return out;
         }
 
-
         void remove(T e){
-            root = remove(root, e);
+            root = remove_recursive(root, e);
         }
-
 };
 
 #endif

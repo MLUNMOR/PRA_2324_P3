@@ -2,12 +2,12 @@
 #include<iostream>
 
 int main() {
-        std::cout << "Creating BSTreeDict<int> dict ..." << std::endl;
+    std::cout << "Creating BSTreeDict<int> dict ..." << std::endl;
 	BSTreeDict<int> dict = BSTreeDict<int>();
 	std::cout << std::endl; 
 
 	std::cout << "dict.entries(): " << dict.entries() << std::endl; 				    
-        std::cout << "cout << dict: " << std::endl << dict << std::endl;
+    std::cout << "cout << dict: " << std::endl << dict << std::endl;
 	std::cout << std::endl; 
 
 	std::cout << "dict.insert('c', 3) ..." << std::endl;
@@ -28,20 +28,21 @@ int main() {
 
 	std::cout << "dict.search('a'): " << dict.search("a") << std::endl;
 	std::cout << "dict['d']: " << dict["d"] << std::endl;
-	std::cout << "dict.remove('c'): " << dict.remove("c") << std::endl;
+	std::cout << "dict.remove('f'): " << dict.remove("f") << std::endl;
 	std::cout << std::endl; 
 	std::cout << std::endl << dict << std::endl;
-        try {
+    
+    try {
 		dict.insert("a", 44);
 		std::cout << "ERROR! dict.insert('a') did not throw std::runtime_error... :(" << std::endl;
 	} catch (std::runtime_error &e) {
 		std::cout << "dict.insert('a') => OK! throwed std::runtime_error: " << e.what() << std::endl; 
 	}
 	try {
-		dict.search("j");
-		std::cout << "ERROR! dict.search('j') did not throw std::runtime_error... :(" << std::endl;
+		dict.search("c");
+		std::cout << "ERROR! dict.search('c') did not throw std::runtime_error... :(" << std::endl;
 	} catch (std::runtime_error &e) {
-		std::cout << "dict.search('j') => OK! throwed std::runtime_error: " << e.what() << std::endl; 
+		std::cout << "dict.search('c') => OK! throwed std::runtime_error: " << e.what() << std::endl; 
 	}
 	try {
 		dict.remove("c");
